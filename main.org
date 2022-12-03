@@ -3,7 +3,7 @@
 * Pop!_OS configuration
 ** Variables
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 #!/usr/bin/env bash
 
@@ -18,7 +18,7 @@ FLATPAK_PROGRAMS=()
 
 ** Update system
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 sudo apt update -y
 sudo apt full-upgrade -y
@@ -27,7 +27,7 @@ sudo apt full-upgrade -y
 
 ** Reading program files
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 while IFS= read line; do
     str_1=$(echo -e "${line%%,*}")
@@ -45,7 +45,7 @@ done < "$PROGRAMS_FILE"
 
 ** Installing required programs
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 for app in "${REQUIRED_PROGRAMS[@]}"; do
     if [[ ! -x $(which "$app") ]]; then
@@ -57,7 +57,7 @@ done
 
 ** Removing locks and adding i386 architecture
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 sudo rm /var/lib/dpkg/lock-frontend
 sudo rm /var/cache/apt/archives/lock
@@ -67,7 +67,7 @@ sudo dpkg --add-architecture i386
 
 ** Removing some Pop!_OS default programs
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 apt list --installed | grep libreoffice | cut -d "/" -f 1 | tr '\n' ' ' | xargs sudo apt remove -y
 
@@ -79,9 +79,9 @@ sudo apt autoremove -y
 
 #+end_src
 
-** Install Nix
+** Install Nix package manager
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 sh <(curl -L https://nixos.org/nix/install) --daemon
 echo 'export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS' >> "$HOME/.profile"
@@ -89,9 +89,9 @@ source "$HOME/.profile"
 
 #+end_src
 
-** Install SourceCodePro Nerd Font
+** Install Nerd Font
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 mkdir -p "$HOME/.local/share/fonts/"
 cp "$MAIN_DIR/aux_files/SauceCodePro.zip" "$HOME/.local/share/fonts/"
@@ -105,7 +105,7 @@ cd "$MAIN_DIR"
 
 ** Install apt and flatpak programs
 
-#+begin_src shell :tangle ./setup.sh
+#+begin_src shell :tangle ./pop-os-setup.sh
 
 for program in "${APT_PROGRAMS[@]}"; do
     sudo apt install "$program" -y
@@ -119,7 +119,7 @@ done
 
 * home-manager setup
 
-#+begin_src shell :tangle ./home-manager.sh
+#+begin_src shell :tangle ./home-manager-setup.sh
 
 #!/usr/bin/env bash
 
@@ -291,9 +291,9 @@ in {
 
 #+end_src
 
-* Placing dotfiles and installing Doom Emacs
+* Placing dotfiles and installing home-manager apps
 
-#+begin_src shell :tangle ./post-install.sh
+#+begin_src shell :tangle ./home-manager-apply.sh
 
 #!/usr/bin/env bash
 
