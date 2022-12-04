@@ -4,12 +4,6 @@ Scripts and dotfiles files for my personal computers.
 
 Create the ~$HOME/Projects~ directory and clone the repo inside.
 
-Execution order:
-
-1) ~setup.sh~
-2) ~home-manager.sh~
-3) ~dotfiles.sh~
-
 ** GNOME Shell extensions
 
 + [[https://extensions.gnome.org/extension/1460/vitals/][Vitals]]
