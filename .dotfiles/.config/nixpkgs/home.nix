@@ -22,6 +22,7 @@ in {
           fs
           janitor
           zoo
+          curl
         ];
       };
     in
