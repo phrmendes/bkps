@@ -23,7 +23,7 @@
 (package! zotxt)
 (package! openwith)
 (package! esh-autosuggest)
-(package! simplenote2)
+(package! company-bibtex)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

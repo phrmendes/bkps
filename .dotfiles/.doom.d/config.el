@@ -214,20 +214,11 @@
 ;; Quarto ---
 
 (require 'quarto-mode)
-
 (add-hook 'poly-gfm+r-mode 'quarto-mode #'company-mode)
 (add-to-list 'auto-mode-alist '("\\.[q]md\\'" . poly-gfm+r-mode))
+(add-to-list 'company-backends 'company-bibtex)
 (after! poly-gfm+r-mode
   (setq markdown-code-block-braces t))
-
-;; ========= SIMPLENOTE =========
-
-(after! simplenote2
-  (setq simplenote2-email "phrmendes@tuta.io")
-  (setq simplenote2-password "Xl79z*iHIkQT!l"))
-
-(simplenote2-setup)
-(simplenote2-sync-notes)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
