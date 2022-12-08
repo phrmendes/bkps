@@ -87,16 +87,15 @@
        tree-sitter     ; syntax and parsing, sitting in a tree...
        ;;upload        ; map local to remote projects via ssh/ftp
        direnv          ; save (or destroy) the environment at your leisure
+       (eval +overlay) ; run code, run (also, repls)
 
        :lang
-       ;;(elixir +lsp)
        emacs-lisp
-       ;;(erlang +lsp)
        nix
-       ess
+       (ess +stan)
        (go +lsp)
-       ;;(haskell +lsp)
-       json
+       (haskell +lsp)
+       (json +lsp)
        (julia +lsp)
        (latex +lsp +fold +cdlatex)
        markdown
@@ -104,6 +103,7 @@
        (python +lsp +conda +pyright +poetry)
        (sh +lsp +fish)
        (yaml +lsp)
+       (lua +lsp)
 
        :config
        ;;literate
