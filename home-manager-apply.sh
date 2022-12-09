@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # home-manager
 nix-shell '<home-manager>' -A install
 rm "$HOME/.config/nixpkgs/home.nix"

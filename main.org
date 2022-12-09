@@ -3,32 +3,25 @@
 * Pop!_OS configuration
 ** Variables
 
-#+begin_src shell :tangle ./pop-os-setup.sh
-
-#!/usr/bin/env bash
-
+#+begin_src shell :tangle ./pop-os-setup.sh :shebang #!/usr/bin/env bash
 MAIN_DIR="$(pwd)"
 REQUIRED_PROGRAMS=(wget git zip unzip gzip curl file build-essential procps)
 TO_REMOVE=(geary gnome-terminal gnome-orca evince totem xterm)
 PROGRAMS_FILE="$MAIN_DIR/aux_files/apt-flatpak-programs.csv"
 APT_PROGRAMS=()
 FLATPAK_PROGRAMS=()
-
 #+end_src
 
 ** Update system
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 sudo apt update -y
 sudo apt full-upgrade -y
-
 #+end_src
 
 ** Reading program files
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 while IFS= read line; do
     str_1=$(echo -e "${line%%,*}")
 sudo apt dist-upgrade -y
@@ -40,35 +33,29 @@ sudo apt dist-upgrade -y
         FLATPAK_PROGRAMS+=("$str_1")
     fi
 done < "$PROGRAMS_FILE"
-
 #+end_src
 
 ** Installing required programs
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 for app in "${REQUIRED_PROGRAMS[@]}"; do
     if [[ ! -x $(which "$app") ]]; then
         sudo apt install "$app" -y
     fi
 done
-
 #+end_src
 
 ** Removing locks and adding i386 architecture
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 sudo rm /var/lib/dpkg/lock-frontend
 sudo rm /var/cache/apt/archives/lock
 sudo dpkg --add-architecture i386
-
 #+end_src
 
 ** Removing some Pop!_OS default programs
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 apt list --installed | grep libreoffice | cut -d "/" -f 1 | tr '\n' ' ' | xargs sudo apt remove -y
 
 for program in "${TO_REMOVE[@]}"; do
@@ -76,23 +63,19 @@ for program in "${TO_REMOVE[@]}"; do
 done
 
 sudo apt autoremove -y
-
 #+end_src
 
 ** Install Nix package manager
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 sh <(curl -L https://nixos.org/nix/install) --daemon
 echo 'export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS' >> "$HOME/.profile"
 source "$HOME/.profile"
-
 #+end_src
 
 ** Install Nerd Font
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 mkdir -p "$HOME/.local/share/fonts/"
 cp "$MAIN_DIR/aux_files/SauceCodePro.zip" "$HOME/.local/share/fonts/"
 cd "$HOME/.local/share/fonts/"
@@ -100,13 +83,11 @@ unzip SauceCodePro.zip
 rm SauceCodePro.zip
 fc-cache -f -v
 cd "$MAIN_DIR"
-
 #+end_src
 
 ** Install apt and flatpak programs
 
 #+begin_src shell :tangle ./pop-os-setup.sh
-
 for program in "${APT_PROGRAMS[@]}"; do
     sudo apt install "$program" -y
 done
@@ -114,36 +95,28 @@ done
 for program in "${FLATPAK_PROGRAMS[@]}"; do
     flatpak install "$program" -y
 done
-
 #+end_src
 
 * home-manager setup
 
-#+begin_src shell :tangle ./home-manager-setup.sh
-
-#!/usr/bin/env bash
-
+#+begin_src shell :tangle ./home-manager-setup.sh :shebang #!/usr/bin/env bash
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 echo 'export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}' >> "$HOME/.bashrc"
-
 #+end_src
 
 * config.nix
 
 #+begin_src nix :tangle ./.dotfiles/.nixpkgs/config.nix
-
 {
   allowUnfree = true;
   environment.pathsToLink = [ "/share/fish" ];
 }
-
 #+end_src
 
 * home.nix
 
 #+begin_src nix :tangle ./.dotfiles/.config/nixpkgs/home.nix
-
 { config, pkgs, ... }:
 
 let
@@ -216,7 +189,6 @@ in {
           texlive.combined.scheme-minimal
         ];
   };
-
   programs = {
     fzf = {
       enable = true;
@@ -318,10 +290,7 @@ in {
 
 * Placing dotfiles and installing home-manager apps
 
-#+begin_src shell :tangle ./home-manager-apply.sh
-
-#!/usr/bin/env bash
-
+#+begin_src shell :tangle ./home-manager-apply.sh :shebang #!/usr/bin/env bash
 # home-manager
 nix-shell '<home-manager>' -A install
 rm "$HOME/.config/nixpkgs/home.nix"
@@ -333,7 +302,6 @@ home-manager switch
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d
 "$HOME/.emacs.d/bin/doom" install
 "$HOME/.emacs.d/bin/doom" sync
-
 #+end_src
 
 Updates: ~home-manager switch~ after applying changes to the ~*.nix~ files.

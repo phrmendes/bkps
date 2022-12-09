@@ -70,7 +70,6 @@ in {
           texlive.combined.scheme-minimal
         ];
   };
-
   programs = {
     fzf = {
       enable = true;

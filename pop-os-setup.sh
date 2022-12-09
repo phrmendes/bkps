@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 MAIN_DIR="$(pwd)"
 REQUIRED_PROGRAMS=(wget git zip unzip gzip curl file build-essential procps)
 TO_REMOVE=(geary gnome-terminal gnome-orca evince totem xterm)
