@@ -146,6 +146,7 @@
   (add-to-list 'org-structure-template-alist '("py" . "src python"))
   (add-to-list 'org-structure-template-alist '("rl" . "src R"))
   (add-to-list 'org-structure-template-alist '("nx" . "src nix"))
+  (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
   (add-to-list 'org-structure-template-alist '("go" . "src go")))
 
 ;; ========= DEFT =========
