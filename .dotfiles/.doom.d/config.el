@@ -49,6 +49,8 @@
 (use-package! company-box
   :hook (company-mode . company-box-mode))
 
+(setq company-global-modes '(not org-mode))
+
 ;; ========= HELM =========
 
 (after! helm
