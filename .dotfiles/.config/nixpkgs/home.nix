@@ -43,12 +43,12 @@ in {
           ncdu
           starship
           quarto
-          micromamba
           direnv
           niv
           lorri
           ranger
           # PACKAGE MANAGERS
+          micromamba
           cargo
           go
           nodejs
@@ -162,7 +162,6 @@ in {
     };
     home-manager.enable = true;
   };
-
   xdg.enable = true;
   xdg.mime.enable = true;
   targets.genericLinux.enable = true;
